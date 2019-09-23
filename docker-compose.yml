@@ -1,0 +1,23 @@
+version: '3'
+
+volumes:
+  db_data: {}
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: bundle exec rails s -b 0.0.0.0
+    volumes:
+      - .:/opt/app
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
+    depends_on:
+      - db
