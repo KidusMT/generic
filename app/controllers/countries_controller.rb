@@ -33,6 +33,17 @@ class CountriesController < ApplicationController
     end
   end
 
+  def update_or_create
+    code = country_params[:code]
+    country = Country.find_by(code: code)
+    if country
+      country.update(country_params)
+    else
+      country = Country.create(country_params)
+    end
+    render json: { success: true, data: country }
+  end
+  
   # DELETE /countries/1
   def destroy
     @country.destroy
@@ -48,4 +59,5 @@ class CountriesController < ApplicationController
     def country_params
       params.require(:country).permit(:code, :name)
     end
+  
 end

@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_23_153856) do
+ActiveRecord::Schema.define(version: 2019_09_24_143502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "clock_times", force: :cascade do |t|
+    t.datetime "check_in_time"
+    t.datetime "checkout_time"
+    t.string "remark"
+    t.string "status"
+    t.bigint "crew_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["crew_id"], name: "index_clock_times_on_crew_id"
+  end
 
   create_table "countries", force: :cascade do |t|
     t.string "code"
@@ -22,4 +33,13 @@ ActiveRecord::Schema.define(version: 2019_09_23_153856) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "crews", force: :cascade do |t|
+    t.string "name"
+    t.string "telephone"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "email"
+  end
+
+  add_foreign_key "clock_times", "crews"
 end
