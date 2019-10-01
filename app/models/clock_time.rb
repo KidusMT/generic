@@ -1,5 +1,5 @@
 class ClockTime < ApplicationRecord
-  validates :name, presence: true, uniqueness: true
+  validates :check_in_time, presence: true, uniqueness: true
 
   belongs_to :crew
 end
